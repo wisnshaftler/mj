@@ -6,7 +6,8 @@ const __dirname = path.resolve();
 const webhook_router = express.Router();
 
 webhook_router.get("/image_callback", (req, res)=>{
-    res.send({ received : true })
+    res.send({ received : true });
+    console.log("in the image callback")
 })
 
 export default webhook_router;
