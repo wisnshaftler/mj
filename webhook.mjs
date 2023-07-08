@@ -7,6 +7,7 @@ const webhook_router = express.Router();
 
 webhook_router.get("/image_callback", (req, res)=>{
     console.log("in the image callback");
+    res.send(req.body);
     res.send({ received : true });
 });
 
