@@ -5,9 +5,9 @@ const __dirname = path.resolve();
 
 const webhook_router = express.Router();
 
-webhook_router.get("/image_callback", (req, res)=>{
+webhook_router.post("/image_callback", (req, res)=>{
     console.log("in the image callback");
-    res.send(req.body);
+    console.log(req.body);
     res.send({ received : true });
 });
 
