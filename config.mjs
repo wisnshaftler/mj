@@ -7,7 +7,11 @@ const siteSettings = {
     dbuser: process.env.dbuser,
     dbhost: process.env.dbhost,
     dbpassword: process.env.dbpassword,
-    dbname: process.env.dbname
+    dbname: process.env.dbname,
+    tnlImagine: "https://api.thenextleg.io/v2/imagine",
+    tnlStatus: "'https://api.thenextleg.io/v2/message/",
+    tnlNaugtyTest: "https://api.thenextleg.io/v2/is-this-naughty",
+    webhook: "https://mj-with-shopify.onrender.com/webhooks/image_callback"
 }
 
 export default siteSettings ;

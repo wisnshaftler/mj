@@ -16,7 +16,6 @@ class scheduleTask {
         taskData.type = type;
         taskData.body = body;
         taskData.callback = callback;
-        taskData.taken = false;
 
         if(scheduleList[siteHash] == null || scheduleList[siteHash] == undefined) {
             scheduleList[siteHash] = [];
@@ -98,3 +97,5 @@ class scheduleTask {
         }.bind(this), 10);
     }
 }
+
+export default scheduleTask = new scheduleTask();
