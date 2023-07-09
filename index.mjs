@@ -2,6 +2,7 @@ import express from 'express';
 import path from "path";
 import cookieParser from 'cookie-parser';
 import cors from "cors";
+import siteSettings from "./config.mjs";
 import webhook_router from './webhook.mjs';
 
 import * as dotenv from 'dotenv';
