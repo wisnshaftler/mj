@@ -89,7 +89,7 @@ class scheduleTask {
             
         }
 
-        return result.data;
+        return result;
     }
 
     async makeGET(url){
