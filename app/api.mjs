@@ -3,6 +3,7 @@ import path from "path";
 import crypto from "crypto";
 import siteSettings from "../config.mjs";
 import scheduler from "./scheduler.mjs";
+import exp from "constants";
 
 const __dirname = path.resolve();
 
@@ -17,16 +18,17 @@ api_router.post("/imagine", (req, res) => {
     const siteHash = req.body.siteHash;
 
     const localHash = crypto.createHash('sha256').update(customerId + siteSettings.secret).digest('hex');
-    const uniqueRquestHash = crypto.createHash("sha256").update(customerId + siteSettings.secret + prompt + String(Date.now()));
+    const uniqueRquestHash = crypto.createHash("sha256").update(customerId + siteSettings.secret + prompt + String(Date.now())).digest('hex');;
 
     if (localHash != hash) {
         return res.status(200).send({ status: 0, msg: "hash not match" });
+        
     }
 
     //give job to the next leg;
     scheduler.addTask(siteSettings.tnlImagine, siteHash, "POST", {
         customerId, prompt, deviceData, hash, uniqueRquestHash
-    }, "webhook" );
+    }, "webhook");
 
     res.status(200).send({ status: 1, msg: "Received" });
 })
@@ -36,3 +38,4 @@ api_router.get("/status/:id", (req, res) => {
     res.status(200).send({ status: 1 });
 });
 
+export default api_router;

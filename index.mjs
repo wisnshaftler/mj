@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 import siteSettings from "./config.mjs";
 import webhook_router from './webhook.mjs';
+import api_router from './app/api.mjs';
 
 import * as dotenv from 'dotenv';
 dotenv.config()
@@ -26,6 +27,7 @@ server.use('/public', express.static(path.join(__dirname, 'PUBLIC')));
 //server.use("/temp", jwt.authenticateCookie, express.static(path.join(__dirname, "TEMP")))
 
 server.use("/webhooks", webhook_router);
+server.use("/api", api_router);
 
 server.get("/", (req, res)=>{
     res.send({ default: "default"})
