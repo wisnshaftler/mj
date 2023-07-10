@@ -56,7 +56,7 @@ class scheduleTask {
         }
 
         //update databse here
-        console.log(result)
+        console.log("reustl goes here")
         
         //call to clear task
     }
@@ -77,10 +77,17 @@ class scheduleTask {
 
     async makePOST(url, body){
         console.log(url, body)
-        const result =  await axios.post(url, body.prompt, { 
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+ siteSettings.tnlTokens
-        } );
+        let result = null;
+        
+        try {
+            result = await axios.post(url, body.prompt, { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ siteSettings.tnlTokens
+            } );
+
+        } catch {
+            
+        }
 
         return result.data;
     }
