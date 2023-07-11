@@ -6,6 +6,7 @@ const currentInQueue = {};
 
 class scheduleTask {
     taskCap = 3;
+    rateLimit = 3; //in seconds
     constructor() {
         this.sheculeExecute()
         console.log("in the schedular")
@@ -79,8 +80,6 @@ class scheduleTask {
 
     async makePOST(url, body) {
         let result = null;
-        console.log(body)
-        console.log(siteSettings.tnlTokens)
 
         const reqBody = {};
         reqBody.msg = body.prompt;
@@ -108,18 +107,36 @@ class scheduleTask {
     }
 
     sheculeExecute() {
+
+        const nextExecuteIsIN = {};
+
         setInterval(function () {
 
             //check are there any process to run when schedule list is 0
             let currentSiteHash = null;
             for (let siteHash of Object.keys(scheduleList)) {
-                currentSiteHash = siteHash
+                currentSiteHash = siteHash;
+
+                if (nextExecuteIsIN[siteHash] == null || nextExecuteIsIN == undefined) {
+                    nextExecuteIsIN[siteHash] = 0;
+                }
+
+                console.log(currentInQueue[siteHash])
                 if (scheduleList[siteHash].length > 0 && currentInQueue[siteHash] < this.taskCap) {
+                    const currentTime = Date.now();
+
+                    if (nextExecuteIsIN[siteHash] > currentTime) { //check 3 seconds delay
+                        continue;
+                    }
+
+                    nextExecuteIsIN[siteHash] = currentTime + this.rateLimit * 3000;
+
                     this.runTask(siteHash);
                 }
             }
 
         }.bind(this), 10);
+
     }
 }
 
