@@ -109,13 +109,6 @@ class scheduleTask {
             }
 
         }.bind(this), 10);
-
-        setInterval(function() {
-            let currentSiteHash = null;
-            for(let siteHash of Object.keys(scheduleList)){
-                console.log(siteHash, scheduleList[siteHash])
-            }
-        }.bind(this), 2000);
     }
 }
 
