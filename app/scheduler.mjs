@@ -19,91 +19,102 @@ class scheduleTask {
         taskData.body = body;
         taskData.callback = callback;
 
-        if(scheduleList[siteHash] == null || scheduleList[siteHash] == undefined) {
+        if (scheduleList[siteHash] == null || scheduleList[siteHash] == undefined) {
             scheduleList[siteHash] = [];
         }
 
-        if(currentInQueue[siteHash] == null || currentInQueue[siteHash] == undefined) {
+        if (currentInQueue[siteHash] == null || currentInQueue[siteHash] == undefined) {
             currentInQueue[siteHash] = 0;
         }
 
         //here need to add database insert 
 
         scheduleList[siteHash].push(taskData);
-        
+
     }
 
-    async runTask(siteHash){
+    async runTask(siteHash) {
         let taskData = null;
         let result = null;
 
         //for manage 3 sec delay queue
-        currentInQueue[siteHash] +=1;
+        currentInQueue[siteHash] += 1;
 
         try {
-            taskData  = JSON.parse(JSON.stringify(scheduleList[siteHash][0])) ;
+            taskData = JSON.parse(JSON.stringify(scheduleList[siteHash][0]));
             scheduleList[siteHash].shift()
-        } catch(e){
+        } catch (e) {
             return;
         }
 
-        if(taskData.type == "GET") {
+        if (taskData.type == "GET") {
             result = await this.makeGET(taskData.url);
         }
 
-        if(taskData.type == "POST") {
+        if (taskData.type == "POST") {
             result = await this.makePOST(taskData.url, taskData.body);
         }
 
         //update databse here
-        console.log("reustl goes here")
-        
+        console.log("reustl goes here");
+        console.log("taskData", taskData)
+        console.log("result.data", result.data)
+
         //call to clear task
     }
 
-    clearTask(siteHash){
-        try{
+    clearTask(siteHash) {
+        try {
             //delete schedule list
             delete scheduleList[siteHash];
-        } catch(e){
+        } catch (e) {
 
         }
-        try{
-            currentInQueue[siteHash] -=1;
-        } catch(e){
+        try {
+            currentInQueue[siteHash] -= 1;
+        } catch (e) {
 
         }
     }
 
-    async makePOST(url, body){
-        console.log(url, body)
+    async makePOST(url, body) {
         let result = null;
-        
-        try {
-            result = await axios.post(url, body.prompt, { 
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+ siteSettings.tnlTokens
-            } );
+        console.log(body)
+        console.log(siteSettings.tnlTokens)
 
-        } catch {
-            
+        const reqBody = {};
+        reqBody.msg = body.prompt;
+        reqBody.ref = body.uniqueRquestHash;
+        reqBody.webhook = ""
+
+        console.log(reqBody)
+        try {
+            result = await axios.post(url, reqBody, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + siteSettings.tnlTokens
+                }
+            });
+
+        } catch (e) {
+            return { data: e };
         }
 
         return result;
     }
 
-    async makeGET(url){
+    async makeGET(url) {
         const result = await axios.get(url)
     }
 
-    sheculeExecute(){
-        setInterval(function(){
+    sheculeExecute() {
+        setInterval(function () {
 
             //check are there any process to run when schedule list is 0
             let currentSiteHash = null;
-            for(let siteHash of Object.keys(scheduleList)){
+            for (let siteHash of Object.keys(scheduleList)) {
                 currentSiteHash = siteHash
-                if(scheduleList[siteHash].length > 0 && currentInQueue[siteHash] < this.taskCap) {
+                if (scheduleList[siteHash].length > 0 && currentInQueue[siteHash] < this.taskCap) {
                     this.runTask(siteHash);
                 }
             }
