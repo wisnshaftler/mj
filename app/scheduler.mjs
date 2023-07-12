@@ -7,6 +7,7 @@ const currentInQueue = {};
 class scheduleTask {
     taskCap = 3;
     rateLimit = 3; //in seconds
+
     constructor() {
         this.sheculeExecute()
         console.log("in the schedular")
@@ -28,7 +29,7 @@ class scheduleTask {
             currentInQueue[siteHash] = 0;
         }
 
-        //here need to add database insert 
+        //here need to add database insert
 
         scheduleList[siteHash].push(taskData);
 
@@ -84,7 +85,7 @@ class scheduleTask {
         const reqBody = {};
         reqBody.msg = body.prompt;
         reqBody.ref = body.uniqueRquestHash;
-        reqBody.webhook = ""
+        reqBody.webhook = body.webhook
 
         console.log(reqBody)
         try {

@@ -11,7 +11,7 @@ const siteSettings = {
     tnlImagine: "https://api.thenextleg.io/v2/imagine",
     tnlStatus: "'https://api.thenextleg.io/v2/message/",
     tnlNaugtyTest: "https://api.thenextleg.io/v2/is-this-naughty",
-    webhook: "https://mj-with-shopify.onrender.com/webhooks/image_callback"
+    imageWebhook: "https://mj-with-shopify.onrender.com/webhooks/image_callback"
 }
 
 export default siteSettings ;

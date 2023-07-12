@@ -3,7 +3,7 @@ import path from "path";
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 import siteSettings from "./config.mjs";
-import webhook_router from './webhook.mjs';
+import webhook_router from './app/webhook.mjs';
 import api_router from './app/api.mjs';
 
 import * as dotenv from 'dotenv';
