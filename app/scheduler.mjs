@@ -1,5 +1,6 @@
 import axios from "axios";
 import siteSettings from "../config.mjs";
+import dbconnection from "./dbconnection.mjs";
 
 const scheduleList = {};
 const currentInQueue = {};
@@ -30,7 +31,9 @@ class scheduleTask {
         }
 
         //here need to add database insert
-
+        let query = `insert into jobs (uniqueRquestHash, customerId, siteHash, prompt, progress ) values ( '${body.uniqueRquestHash}', '${body.customerId}', '${siteHash}', '${body.prompt}', '0' )`;
+        dbconnection.query(query );
+        
         scheduleList[siteHash].push(taskData);
 
     }
@@ -122,7 +125,6 @@ class scheduleTask {
                     nextExecuteIsIN[siteHash] = 0;
                 }
 
-                console.log(currentInQueue[siteHash])
                 if (scheduleList[siteHash].length > 0 && currentInQueue[siteHash] < this.taskCap) {
                     const currentTime = Date.now();
 

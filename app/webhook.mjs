@@ -5,10 +5,8 @@ const __dirname = path.resolve();
 
 const webhook_router = express.Router();
 
-webhook_router.post("/imagine", (req, res)=>{
-    console.log("in the image callback");
-    console.log(req.body);
-    res.send({ received : true });
+webhook_router.post("/imagine", async (req, res)=>{
+    //save in the table
 });
 
 

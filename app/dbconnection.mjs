@@ -21,6 +21,12 @@ class dbconnection {
         this.#query = util.promisify(this.#connection.query).bind(this.#connection);
     }
 
+    /**
+     * 
+     * @param {String} sql SQL query
+     * @param {Array} parameters values that pass in the SQL query
+     * @returns promise (if await data)
+     */
     async query(sql, parameters) {
         let result;
         try {
@@ -33,9 +39,9 @@ class dbconnection {
             }
         } catch (e) {
             console.log(e)
-            return [false, e];
+            return null
         }
-        return [true, JSON.parse(JSON.stringify(result))];
+        return JSON.parse(JSON.stringify(result));
 
     }
 }
