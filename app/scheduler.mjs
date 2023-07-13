@@ -31,7 +31,7 @@ class scheduleTask {
         }
 
         //here need to add database insert
-        let query = `insert into jobs (uniqueRquestHash, customerId, siteHash, prompt, progress ) values ( '${body.uniqueRquestHash}', '${body.customerId}', '${siteHash}', '${body.prompt}', '0' )`;
+        let query = `insert into jobs (uniqueRequestHash, customerId, siteHash, prompt, progress ) values ( '${body.uniqueRequestHash}', '${body.customerId}', '${siteHash}', '${body.prompt}', '0' )`;
         dbconnection.query(query );
         
         scheduleList[siteHash].push(taskData);
@@ -61,11 +61,8 @@ class scheduleTask {
         }
 
         //update databse here
-        console.log("reustl goes here");
-        console.log("taskData", taskData)
-        console.log("result.data", result.data)
-
-        //call to clear task
+        let query = `update jobs set tnlMessageId = ? where uniqueRequestHash = ?`;
+        dbconnection.query(query, [ result.data.messageId, taskData.body.uniqueRequestHash ]);
     }
 
     clearTask(siteHash) {
@@ -87,7 +84,7 @@ class scheduleTask {
 
         const reqBody = {};
         reqBody.msg = body.prompt;
-        reqBody.ref = body.uniqueRquestHash;
+        reqBody.ref = body.uniqueRequestHash;
         reqBody.webhook = body.webhook
 
         console.log(reqBody)

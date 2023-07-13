@@ -18,7 +18,7 @@ api_router.post("/imagine", (req, res) => {
     const siteHash = req.body.siteHash;
 
     const localHash = crypto.createHash('sha256').update(customerId + siteSettings.secret).digest('hex');
-    const uniqueRquestHash = crypto.createHash("sha256").update(customerId + siteSettings.secret + prompt + String(Date.now())).digest('hex');;
+    const uniqueRequestHash = crypto.createHash("sha256").update(customerId + siteSettings.secret + prompt + String(Date.now())).digest('hex');;
 
     if (localHash != hash) {
         return res.status(200).send({ status: 0, msg: "hash not match" });
@@ -27,7 +27,7 @@ api_router.post("/imagine", (req, res) => {
 
     //give job to the next leg;
     scheduler.addTask(siteSettings.tnlImagine, siteHash, "POST", {
-        customerId, prompt, deviceData, hash, uniqueRquestHash, webhook: siteSettings.imageWebhook
+        customerId, prompt, deviceData, hash, uniqueRequestHash, webhook: siteSettings.imageWebhook
     }, "webhook");
 
     res.status(200).send({ status: 1, msg: "Received" });
