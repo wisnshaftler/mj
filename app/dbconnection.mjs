@@ -15,7 +15,8 @@ class dbconnection {
             host: this.#host,
             user: this.#username,
             password: this.#password,
-            database: this.#dbname
+            database: this.#dbname,
+            charset : 'utf8mb4'
         });
 
         this.#query = util.promisify(this.#connection.query).bind(this.#connection);
