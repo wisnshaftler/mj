@@ -12,6 +12,7 @@ const webhook_router = express.Router();
 
 webhook_router.post("/imagine", async (req, res) => {
     console.log("request received");
+    console.log(req.body);
     if (!validator.notFalsy(req.body.response)) {
         res.status(400).send({ status: 0, msg: "Bad request" })
         return;
