@@ -39,11 +39,13 @@ api_router.get("/status/:id", async (req, res) => {
     //check in db for the status
     const dbResult = await dbconnection.query("SELECT * FROM jobs WHERE uniqueRequestHash =?", [uniqueRequestHash]);
     console.log(dbResult);
+    console.log(dbResult.length);
+    
 
     if(dbResult.length == 0) {
         return res.status(200).send({ status: 0, msg: "Not found" });
     }
-    if(dbResult.length > 1 && dbResult[0].progress <= 100) {
+    if(dbResult.length > 1 && parseInt(dbResult[0].progress) <= 100) {
         return res.status(200).send({ status: 1, msg: "processing", progress: dbResult[0].progress });
     }
 
