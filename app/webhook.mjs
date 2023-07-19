@@ -29,7 +29,7 @@ webhook_router.post("/imagine", async (req, res) => {
     }
 
     let sql = `update jobs set imageUrls = ?, progress = ? , tnlResponse = ? where uniqueRequestHash = ?`;
-    dbconnection.query(sql, [req.body.imageUrls.join(","), req.body.progress, JSON.stringify(req.body), req.body.ref]);
+    dbconnection.query(sql, [req.body.imageUrls.join(","), 100, JSON.stringify(req.body), req.body.ref]);
 
     const resourceLoader = new ResourceLoader({
         strictSSL: true,
