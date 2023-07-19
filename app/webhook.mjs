@@ -13,7 +13,7 @@ const webhook_router = express.Router();
 webhook_router.post("/imagine", async (req, res) => {
     console.log("request received");
     console.log(req.body);
-    console.log("not falsy check ", validator.notFalsyCheck(req.body));
+    console.log("not falsy check ", validator.notFalsy(req.body));
     console.log("not object ", validator.isObject(req.body)); 
 
     console.log("image urls ", req.body.imageUrls);
