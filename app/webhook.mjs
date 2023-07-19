@@ -41,7 +41,7 @@ webhook_router.post("/imagine", async (req, res) => {
     const virtualConsole = new VirtualConsole();
 
     //download image from URL
-    console.log(req.body.response.imageUrls[0])
+    console.log(req.body.imageUrls[0])
     const dom = new JSDOM('<!DOCTYPE html><html><head></head><body><h1>AAA</h1></body></html>', {
         referrer: undefined,
         contentType: "text/html",
