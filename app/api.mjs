@@ -37,7 +37,7 @@ api_router.get("/status/:id", async (req, res) => {
     const uniqueRequestHash = req.params.id;
 
     //check in db for the status
-    const dbResult = await dbconnection.query("SELECT * FROM jobs WHERE uniqueRequstHash =?", [uniqueRequestHash]);
+    const dbResult = await dbconnection.query("SELECT * FROM jobs WHERE uniqueRequestHash =?", [uniqueRequestHash]);
     console.log(dbResult);
 
     if(dbResult.length == 0) {
