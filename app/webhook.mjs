@@ -16,6 +16,7 @@ webhook_router.post("/imagine", async (req, res) => {
     console.log("not falsy check ", validator.notFalsyCheck(req.body));
     console.log("not object ", validator.isObject(req.body)); 
 
+    console.log("image urls ", req.body.imageUrls);
 
     if (!validator.notFalsy(req.body)) {
         res.status(400).send({ status: 0, msg: "Bad request" })
