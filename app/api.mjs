@@ -4,6 +4,7 @@ import crypto from "crypto";
 import siteSettings from "../config.mjs";
 import scheduler from "./scheduler.mjs";
 import exp from "constants";
+import dbconnection from "./dbconnection.mjs";
 
 const __dirname = path.resolve();
 
@@ -29,12 +30,23 @@ api_router.post("/imagine", (req, res) => {
         customerId, prompt, deviceData, hash, uniqueRequestHash, webhook: siteSettings.imageWebhook
     }, siteSettings.imageWebhook);
 
-    res.status(200).send({ status: 1, msg: "Received" });
+    res.status(200).send({ status: 1, msg: "Received", msgId: uniqueRequestHash });
 })
 
-api_router.get("/status/:id", (req, res) => {
-    console.log("received")
-    res.status(200).send({ status: 1 });
+api_router.get("/status/:id", async (req, res) => {
+    const uniqueRequestHash = req.params.id;
+
+    //check in db for the status
+    const dbResult = await dbconnection.query("SELECT * FROM jobs WHERE uniqueRequstHash =?", [uniqueRequestHash]);
+
+    if(dbResult.length == 0) {
+        return res.status(200).send({ status: 0, msg: "Not found" });
+    }
+    if(dbResult.length > 1 && dbResult[0].progress <= 100) {
+        return res.status(200).send({ status: 1, msg: "processing", progress: dbResult[0].progress });
+    }
+
+    return res.status(200).send({ status:1 , msg:"done", progress: 100, imageUrls: dbResult[0].imageUrls });
 });
 
 export default api_router;
