@@ -38,6 +38,7 @@ api_router.get("/status/:id", async (req, res) => {
 
     //check in db for the status
     const dbResult = await dbconnection.query("SELECT * FROM jobs WHERE uniqueRequstHash =?", [uniqueRequestHash]);
+    console.log(dbResult);
 
     if(dbResult.length == 0) {
         return res.status(200).send({ status: 0, msg: "Not found" });
