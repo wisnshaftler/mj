@@ -13,18 +13,22 @@ const webhook_router = express.Router();
 webhook_router.post("/imagine", async (req, res) => {
     console.log("request received");
     console.log(req.body);
-    if (!validator.notFalsy(req.body.response)) {
+    console.log("not falsy check ", validator.notFalsyCheck(req.body));
+    console.log("not object ", validator.isObject(req.body)); 
+
+
+    if (!validator.notFalsy(req.body)) {
         res.status(400).send({ status: 0, msg: "Bad request" })
         return;
     }
 
-    if (!validator.isObject(req.body.response)) {
+    if (!validator.isObject(req.body)) {
         res.status(400).send({ status: 0, msg: "Bad request" })
         return;
     }
 
     let sql = `update jobs set imageUrls = ?, progress = ? , tnlResponse = ? where uniqueRequestHash = ?`;
-    dbconnection.query(sql, [req.body.response.imageUrls.join(","), req.body.progress, JSON.stringify(req.body.response), req.body.response.ref]);
+    dbconnection.query(sql, [req.body.imageUrls.join(","), req.body.progress, JSON.stringify(req.body), req.body.ref]);
 
     const resourceLoader = new ResourceLoader({
         strictSSL: true,

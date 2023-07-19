@@ -52,8 +52,6 @@ class scheduleTask {
             return;
         }
 
-        console.log(taskData)
-
         if (taskData.type == "GET") {
             result = await this.makeGET(taskData.url);
         }
