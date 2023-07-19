@@ -17,9 +17,12 @@
     "express": "^4.18.2",
     "formidable": "^3.4.0",
     "fs": "^0.0.1-security",
+    "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.22",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "puppeteer": "^20.8.2",
+    "sharp": "^0.32.3"
   }
 }

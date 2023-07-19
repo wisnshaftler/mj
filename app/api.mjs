@@ -22,7 +22,6 @@ api_router.post("/imagine", (req, res) => {
 
     if (localHash != hash) {
         return res.status(200).send({ status: 0, msg: "hash not match" });
-        
     }
 
     //give job to the next leg;

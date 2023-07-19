@@ -15,7 +15,7 @@ const server = express();
 const __dirname = path.resolve();
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // replace with your React app's URL
+    origin: '*', // replace with your React app's URL
     optionsSuccessStatus: 200,
     credentials: true, // enable cookies
 }
