@@ -27,7 +27,7 @@ api_router.post("/imagine", (req, res) => {
     //give job to the next leg;
     scheduler.addTask(siteSettings.tnlImagine, siteHash, "POST", {
         customerId, prompt, deviceData, hash, uniqueRequestHash, webhook: siteSettings.imageWebhook
-    }, "webhook");
+    }, siteSettings.imageWebhook);
 
     res.status(200).send({ status: 1, msg: "Received" });
 })

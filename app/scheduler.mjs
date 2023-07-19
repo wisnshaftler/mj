@@ -44,13 +44,15 @@ class scheduleTask {
 
         //for manage 3 sec delay queue
         currentInQueue[siteHash] += 1;
-
+        
         try {
             taskData = JSON.parse(JSON.stringify(scheduleList[siteHash][0]));
             scheduleList[siteHash].shift()
         } catch (e) {
             return;
         }
+
+        console.log(taskData)
 
         if (taskData.type == "GET") {
             result = await this.makeGET(taskData.url);
