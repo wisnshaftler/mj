@@ -41,7 +41,7 @@ webhook_router.post("/imagine", async (req, res) => {
     res.status(200).send({ status: 1, msg: "Success" });
 
     //get sitehash
-    scheduler.clearTask(siteSettings.secret);
+    scheduler.clearTask(siteSettings.secret, req.body.ref);
 
     const virtualConsole = new VirtualConsole();
 

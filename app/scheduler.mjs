@@ -69,8 +69,9 @@ class scheduleTask {
         dbconnection.query(query, [ result.data.messageId, taskData.body.uniqueRequestHash ]);
     }
 
-    clearTask(siteHash) {
+    clearTask(siteHash, ref) {
         console.log("task cleared", siteHash);
+        console.log(scheduleList);
         try {
             //delete schedule list
             delete scheduleList[siteHash];
