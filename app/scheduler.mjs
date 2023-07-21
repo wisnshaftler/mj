@@ -47,7 +47,7 @@ class scheduleTask {
         //for manage 3 sec delay queue
         currentInQueue[siteHash] += 1;
 
-        
+
         
         try {
             taskData = JSON.parse(JSON.stringify(scheduleList[siteHash][0]));
@@ -70,6 +70,7 @@ class scheduleTask {
     }
 
     clearTask(siteHash) {
+        console.log("task cleared", siteHash);
         try {
             //delete schedule list
             delete scheduleList[siteHash];
@@ -78,6 +79,8 @@ class scheduleTask {
         }
         try {
             currentInQueue[siteHash] -= 1;
+            console.log("currentLog in queue" ,currentInQueue[siteHash])
+            console.log(currentInQueue)
         } catch (e) {
 
         }
