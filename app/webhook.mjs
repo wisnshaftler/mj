@@ -30,6 +30,10 @@ webhook_router.post("/imagine", async (req, res) => {
         return;
     }
 
+    //****************************  ********************************************* */
+    await new Promise(resolve => setTimeout(resolve, 15000)); // 3 sec
+    /** ************************************************************* */
+
     let sql = `update jobs set imageUrls = ?, progress = ? , tnlResponse = ? where uniqueRequestHash = ?`;
     dbconnection.query(sql, [req.body.imageUrls.join(","), 100, JSON.stringify(req.body), req.body.ref]);
 
