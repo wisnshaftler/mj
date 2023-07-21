@@ -5,6 +5,7 @@ import validator from "./validator.mjs";
 import fs from "fs";
 import { JSDOM, ResourceLoader, VirtualConsole } from "jsdom";
 import scheduler from "./scheduler.mjs";
+import siteSettings from "../config.mjs";
 
 const __dirname = path.resolve();
 
@@ -38,7 +39,9 @@ webhook_router.post("/imagine", async (req, res) => {
     });
 
     res.status(200).send({ status: 1, msg: "Success" });
-    scheduler.clearTask(req.body.ref);
+
+    //get sitehash
+    scheduler.clearTask(siteSettings.secret);
 
     const virtualConsole = new VirtualConsole();
 
