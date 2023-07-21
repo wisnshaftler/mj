@@ -74,7 +74,7 @@ class scheduleTask {
         console.log(JSON.stringify(scheduleList));
         try {
             //delete schedule list
-            delete scheduleList[siteHash];
+            scheduleList[siteHash] =scheduleList[siteHash].filter(task => task.uniqueRequestHash!= ref);
         } catch (e) {
 
         }
