@@ -71,7 +71,7 @@ class scheduleTask {
 
     clearTask(siteHash, ref) {
         console.log("task cleared", siteHash);
-        console.log(scheduleList);
+        console.log(JSON.stringify(scheduleList));
         try {
             //delete schedule list
             delete scheduleList[siteHash];
