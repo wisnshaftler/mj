@@ -30,6 +30,8 @@ class scheduleTask {
             currentInQueue[siteHash] = 0;
         }
 
+        console.log("task added");
+
         //here need to add database insert
         let query = `insert into jobs (uniqueRequestHash, customerId, siteHash, prompt, progress ) values ( '${body.uniqueRequestHash}', '${body.customerId}', '${siteHash}', '${body.prompt}', '0' )`;
         dbconnection.query(query );
@@ -44,6 +46,8 @@ class scheduleTask {
 
         //for manage 3 sec delay queue
         currentInQueue[siteHash] += 1;
+
+        
         
         try {
             taskData = JSON.parse(JSON.stringify(scheduleList[siteHash][0]));
@@ -104,7 +108,13 @@ class scheduleTask {
     }
 
     async makeGET(url) {
-        const result = await axios.get(url)
+        const result = await axios.get(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer'+ siteSettings.tnlTokens
+            }
+        })
+        return result,data;
     }
 
     sheculeExecute() {
@@ -137,6 +147,32 @@ class scheduleTask {
 
         }.bind(this), 10);
 
+    }
+
+    //get from DB and check if it is completed 
+    async checkCompleted(uniqueRequestHash) {
+        let query = `select * from jobs where progress = 0`;
+        const dbdata = await dbconnection.query(query);
+
+        console.log(dbdata); 
+        for (let i = 0; i < dbdata.length; i++) {
+            const currentInQueue = dbdata[i];
+            //get tnlMessageId
+            const tnlMessageId = currentInQueue['tnlMessageId'];
+            //check with tnl
+            const result = await this.makeGET(siteSettings.tnlStatus + tnlMessageId);
+            
+            console.log(result);
+            return
+            if (result.status == 200 && result.data.status == "completed") {
+                //update database
+                let query = `update jobs set progress = 1 where uniqueRequestHash =?`;
+                dbconnection.query(query, [ currentInQueue['uniqueRequestHash'] ]);
+            }
+            
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 5000)); // 3 sec
     }
 }
 
