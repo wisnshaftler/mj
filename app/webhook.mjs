@@ -6,6 +6,7 @@ import fs from "fs";
 import { JSDOM, ResourceLoader, VirtualConsole } from "jsdom";
 import scheduler from "./scheduler.mjs";
 import siteSettings from "../config.mjs";
+import DataProcessor from "./tempWebhook.mjs";
 
 const __dirname = path.resolve();
 
@@ -13,6 +14,7 @@ const webhook_router = express.Router();
 
 
 webhook_router.post("/imagine", async (req, res) => {
+
     console.log("request received");
     console.log(req.body);
     console.log("not falsy check ", validator.notFalsy(req.body));
@@ -29,6 +31,9 @@ webhook_router.post("/imagine", async (req, res) => {
         res.status(400).send({ status: 0, msg: "Bad request" })
         return;
     }
+
+    // this is temporary for the prompt auto generation
+    DataProcessor.processResponse(req.body)
 
     //****************************  ********************************************* */
     await new Promise(resolve => setTimeout(resolve, 15000)); // 3 sec
