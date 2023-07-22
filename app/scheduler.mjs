@@ -80,6 +80,9 @@ class scheduleTask {
         }
         try {
             currentInQueue[siteHash] -= 1;
+            if(currentInQueue[siteHash] === 0) {
+                currentInQueue[siteHash] = 0;
+            }
             console.log("currentLog in queue" ,currentInQueue[siteHash])
             console.log(currentInQueue)
         } catch (e) {
