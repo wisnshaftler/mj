@@ -52,6 +52,7 @@ webhook_router.post("/imagine", async (req, res) => {
     //get sitehash
     scheduler.clearTask(siteSettings.secret, req.body.ref);
 
+    return;
     const virtualConsole = new VirtualConsole();
 
     //download image from URL
