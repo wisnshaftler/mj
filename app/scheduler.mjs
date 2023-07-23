@@ -80,7 +80,7 @@ class scheduleTask {
         }
         try {
             currentInQueue[siteHash] -= 1;
-            if(currentInQueue[siteHash] === 0) {
+            if(currentInQueue[siteHash] == 0 || isNaN(currentInQueue[siteHash]) ) {
                 currentInQueue[siteHash] = 0;
             }
             console.log("currentLog in queue" ,currentInQueue[siteHash])
