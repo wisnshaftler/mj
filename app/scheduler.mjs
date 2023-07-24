@@ -31,6 +31,7 @@ class scheduleTask {
         }
 
         console.log("task added");
+        console.log(scheduleList, currentInQueue);
 
         //here need to add database insert
         let query = `insert into jobs (uniqueRequestHash, customerId, siteHash, prompt, progress ) values ( '${body.uniqueRequestHash}', '${body.customerId}', '${siteHash}', '${body.prompt}', '0' )`;
@@ -47,7 +48,8 @@ class scheduleTask {
         //for manage 3 sec delay queue
         currentInQueue[siteHash] += 1;
 
-
+        console.log("task is running");
+        console.log(scheduleList, currentInQueue);
         
         try {
             taskData = JSON.parse(JSON.stringify(scheduleList[siteHash][0]));

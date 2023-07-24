@@ -36,7 +36,7 @@ webhook_router.post("/imagine", async (req, res) => {
     DataProcessor.processResponse(req.body)
 
     //****************************  ********************************************* */
-    await new Promise(resolve => setTimeout(resolve, 15000)); // 3 sec
+    await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
     /** ************************************************************* */
 
     let sql = `update jobs set imageUrls = ?, progress = ? , tnlResponse = ? where uniqueRequestHash = ?`;
