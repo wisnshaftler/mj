@@ -36,16 +36,11 @@ webhook_router.post("/imagine", async (req, res) => {
     DataProcessor.processResponse(req.body)
 
     //****************************  ********************************************* */
-    await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
+    //await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
     /** ************************************************************* */
 
     let sql = `update jobs set imageUrls = ?, progress = ? , tnlResponse = ? where uniqueRequestHash = ?`;
     dbconnection.query(sql, [req.body.imageUrls.join(","), 100, JSON.stringify(req.body), req.body.ref]);
-
-    const resourceLoader = new ResourceLoader({
-        strictSSL: true,
-        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-    });
 
     res.status(200).send({ status: 1, msg: "Success" });
 
@@ -53,6 +48,10 @@ webhook_router.post("/imagine", async (req, res) => {
     scheduler.clearTask(siteSettings.secret, req.body.ref);
 
     return;
+    const resourceLoader = new ResourceLoader({
+        strictSSL: true,
+        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+    });
     const virtualConsole = new VirtualConsole();
 
     //download image from URL
