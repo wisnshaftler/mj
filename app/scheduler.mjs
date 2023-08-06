@@ -32,6 +32,8 @@ class scheduleTask {
 
         console.log("task added");
         console.log(scheduleList, currentInQueue);
+        console.log();
+        console.log("uniqueRequestHash: " + body.uniqueRequestHash);
 
         //here need to add database insert
         let query = `insert into jobs (uniqueRequestHash, customerId, siteHash, prompt, progress ) values ( '${body.uniqueRequestHash}', '${body.customerId}', '${siteHash}', '${body.prompt}', '0' )`;
@@ -66,6 +68,7 @@ class scheduleTask {
             result = await this.makePOST(taskData.url, taskData.body);
         }
 
+        console.log("in run task: " + taskData.body.uniqueRequestHash);
         //update databse here
         let query = `update jobs set tnlMessageId = ? where uniqueRequestHash = ?`;
         dbconnection.query(query, [ result.data.messageId, taskData.body.uniqueRequestHash ]);
