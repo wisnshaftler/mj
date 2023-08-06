@@ -17,6 +17,7 @@ webhook_router.post("/imagine", async (req, res) => {
 
     console.log("request received");
     console.log(req.body);
+    
     console.log("not falsy check ", validator.notFalsy(req.body));
     console.log("not object ", validator.isObject(req.body)); 
 
@@ -33,7 +34,7 @@ webhook_router.post("/imagine", async (req, res) => {
     }
 
     // this is temporary for the prompt auto generation
-    DataProcessor.processResponse(req.body)
+    //DataProcessor.processResponse(req.body)
 
     //****************************  ********************************************* */
     //await new Promise(resolve => setTimeout(resolve, 10000)); // 3 sec
